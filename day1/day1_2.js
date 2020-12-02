@@ -5,24 +5,30 @@ fs.readFile('./input.txt', (e, data) => {
 
   const ascending = input.sort((a, b) => a-b);
   const descending = [...input.sort((a, b) => b-a)]
-  const matches = [];
+  let match;
 
   let reverseStartingIndex = 0;
 
   for (let i = 0; i < ascending.length; i++) {
-    // we only need  a single match
-    if (matches.length) {
+    // we only need a single match
+    if (match) {
       break;
     }
 
     for (let k = reverseStartingIndex; k < descending.length; k++) {
-      if ((ascending[i] + descending[k]) === 2020) {
-        matches.push([ascending[i], descending[k]]);
-        reverseStartingIndex = k;
-        break;
+      const sum = ascending[i] + descending[k];
+      if (sum >= 2020) {
+        continue;
+      }
+
+      for (let m = i; m < ascending.length; m++) {
+        if (sum + ascending[m] === 2020) {
+          match = [ascending[i], descending[k], ascending[m]];
+          break;
+        }
       }
     }
   }
 
-  console.log(matches[0][0] * matches[0][1]);
+  console.log(match[0] * match[1] * match[2]);
 });
