@@ -19,9 +19,5 @@ fs.readFile('./input.txt', (e, data) => {
     }
   }, 0);
 
-  console.log(input[0]);
-  console.log(input[1]);
-  console.log(input[2]);
-  console.log(input[3]);
   console.log(nrOfValidPasses);
 });
