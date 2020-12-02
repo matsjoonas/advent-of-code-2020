@@ -2,8 +2,7 @@ const fs = require('fs');
 fs.readFile('./input.txt', (e, data) => {
 
   const input = data.toString().trim().split('\r\n').map(item => parseInt(item.trim()));
-  // sum is 2020
-  //
+
   const ascending = input.sort((a, b) => a-b);
   const descending = [...input.sort((a, b) => b-a)]
   const matches = [];
