@@ -28,6 +28,6 @@ fs.readFile('./input.txt', (e, data) => {
       return acc;
     }
   }, 0);
-  
+
   console.log(nrOfValidPasses);
 });
