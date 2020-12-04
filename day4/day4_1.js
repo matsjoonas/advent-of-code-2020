@@ -70,6 +70,6 @@ fs.readFile('./input.txt', (e, data) => {
       }
     }, 0);
   }
-  
+
   console.log(countValidPassports(passports));
 });
