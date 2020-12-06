@@ -26,6 +26,6 @@ fs.readFile('./input.txt', (e, data) => {
     .reduce((acc, cur) => {
       return (acc > cur.id) ? acc : cur.id
     }, 0);
-  
+
   console.log(highestId);
 });
