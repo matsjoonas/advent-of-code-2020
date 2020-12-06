@@ -21,7 +21,7 @@ fs.readFile('./input.txt', (e, data) => {
   }
 
   function unique(str) {
-    return [...new Set(str)].sort().join('');
+    return [...new Set(str)].join('');
   }
 
   const count = getGroups(input).reduce((acc, cur) => {
