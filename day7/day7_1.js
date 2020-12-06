@@ -1,8 +1,20 @@
-const context = require('../util/context');
-context('./input.txt', solve);
+const AocSuite = require('../util/AocSuite');
+const suite = new AocSuite({
+  solver,
+  testInputsDir: 'testInputs1',
+  expectedTestAnswers: [],
+});
 
-function solve(data) {
+//suite.performance();
+//suite.test();
+suite.solve();
+
+function solver(data) {
   const input = data.toString().trim().split('\r\n');
 
-  return input;
+  console.log(input);
+
+  return null;
 }
+
+
