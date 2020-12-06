@@ -1,8 +1,8 @@
 const fs = require('fs');
 const {performance} = require('perf_hooks');
 
-module.exports = function(solve) {
-  fs.readFile('./input.txt', function(e, data) {
+module.exports = function(inputPath, solve) {
+  fs.readFile(inputPath, function(e, data) {
     const t0 = performance.now();
     const answer = solve(data);
     const t1 = performance.now();

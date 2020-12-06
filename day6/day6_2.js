@@ -1,9 +1,9 @@
 const context = require('../util/context');
-context(solve);
+context('./input.txt', solve);
 
 function solve(data) {
   const input = data.toString().trim().split('\r\n');
-  
+
   function getGroups(input) {
     const groups = [];
     let groupIdx = 0;
