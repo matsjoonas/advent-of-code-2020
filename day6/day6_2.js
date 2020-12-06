@@ -1,8 +1,9 @@
-const fs = require('fs');
-fs.readFile('./input.txt', (e, data) => {
+const context = require('../util/context');
+context(solve);
 
+function solve(data) {
   const input = data.toString().trim().split('\r\n');
-
+  
   function getGroups(input) {
     const groups = [];
     let groupIdx = 0;
@@ -27,9 +28,9 @@ fs.readFile('./input.txt', (e, data) => {
       .join('');
   }
 
-  const count = getGroups(input).reduce((total, group) => {
+  return getGroups(input).reduce((total, group) => {
     return total + group.reduce(intersection, group[0]).length;
   }, 0);
+}
 
-  console.log(count);
-});
+
