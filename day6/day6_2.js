@@ -22,10 +22,11 @@ fs.readFile('./input.txt', (e, data) => {
 
   function intersection(array) {
     return array.reduce((acc, cur) => {
+      const curAsArray = cur.split('');
       if (!acc) {
-        return cur.split('');
+        return curAsArray;
       }
-      return acc.filter(x => cur.split('').includes(x));
+      return acc.filter(x => curAsArray.includes(x));
     }, null);
   }
 
