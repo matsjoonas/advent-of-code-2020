@@ -1,9 +1,4 @@
 const AocSuite = require('../util/AocSuite');
-const suite = new AocSuite({
-  solver,
-  testInputsDir: 'testInputs2',
-  expectedTestAnswers: [8],
-});
 
 class Computer {
   constructor() {
@@ -99,6 +94,11 @@ function solver(data) {
   }
 }
 
+const suite = new AocSuite({
+  solver,
+  testInputsDir: 'testInputs2',
+  expectedTestAnswers: [8],
+});
 
 //suite.test();
 suite.solve();
