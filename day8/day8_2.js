@@ -34,6 +34,11 @@ class Computer {
     }
   }
 
+  runInstruction(instruction) {
+    const [opcode, arg] = instruction;
+    this.ops[opcode](arg);
+  }
+
   run(instructions) {
     this.reset();
     const _self = this;
@@ -52,8 +57,7 @@ class Computer {
 
     while (shouldContinue()) {
       _self.executed[_self.ptr] = true;
-      const [opcode, arg] = instructions[_self.ptr];
-      _self.ops[opcode](arg);
+      _self.runInstruction(instructions[_self.ptr])
     }
 
     return {
