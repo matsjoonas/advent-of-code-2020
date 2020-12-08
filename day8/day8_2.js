@@ -44,15 +44,15 @@ class Computer {
     const _self = this;
 
     function shouldContinue() {
-      let decision = true;
       if (_self.ptr > instructions.length - 1) {
-        decision = false;
         _self.setStatus(_self.STATUS_CODES.terminated, `ptr: ${_self.ptr} points to a nonexistent instruction`);
+        return false;
       } else if (_self.executed[_self.ptr]) {
-        decision = false;
         _self.setStatus(_self.STATUS_CODES.error, `instruction ${_self.ptr} has already been executed`);
+        return false;
+      } else {
+        return true;
       }
-      return decision;
     }
 
     while (shouldContinue()) {
@@ -83,7 +83,6 @@ function solver(data) {
     }
 
     let modifiedInstructions = [...instructions];
-
     let newInstruction = [...modifiedInstructions[i]]
     if (newInstruction[0] === 'jmp') {
       newInstruction[0] = 'nop';
