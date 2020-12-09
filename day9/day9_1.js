@@ -14,10 +14,10 @@ function solver(data) {
   }
 
   const preambleLength = 25;
-  const range = 25;
+  const rangeLength = 25;
   let match;
   for (let i = preambleLength; i < numbers.length; i++) {
-    if (!isSum(numbers.slice(i - range, i), numbers[i])) {
+    if (!isSum(numbers.slice(i - rangeLength, i), numbers[i])) {
       match = numbers[i];
       break;
     }
