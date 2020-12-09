@@ -6,16 +6,16 @@ function solver(data) {
 
   // takes an array of numbers and from those numbers (starting from 0)
   // returns a contiguous range of numbers that sum to target
-  function numbersThatSumTo(inputNumbers, target) {
+  function numbersThatSumTo(inputNumbers, targetSum) {
     let sum = 0;
     let i = 0;
     const outputNumbers = [];
-    while (sum < target) {
+    while (sum < targetSum) {
       outputNumbers.push(inputNumbers[i]);
       sum += inputNumbers[i];
       i++;
     }
-    if (sum === target) {
+    if (sum === targetSum) {
       return outputNumbers;
     } else {
       return false;
