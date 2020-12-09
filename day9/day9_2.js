@@ -4,7 +4,8 @@ function solver(data) {
   const numbers = data.toString().trim().split('\r\n')
     .map(item => parseInt(item));
 
-  // takes an array of numbers and from those numbers returns an array of numbers that sum to target
+  // takes an array of numbers and from those numbers (starting from 0)
+  // returns a contiguous range of numbers that sum to target
   function numbersThatSumTo(inputNumbers, target) {
     let sum = 0;
     let i = 0;
