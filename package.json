@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "lodash": "^4.17.20"
   },
   "devDependencies": {},
   "repository": {
