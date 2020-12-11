@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "canvas": "^2.6.1",
     "colors": "^1.4.0",
     "lodash": "^4.17.20"
   },

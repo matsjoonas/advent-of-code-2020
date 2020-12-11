@@ -1,5 +1,6 @@
 const AocSuite = require('../util/AocSuite');
 const Grid = require('../util/Grid');
+const snapshot = require('./snapshot');
 
 
 function solver(data) {
@@ -73,6 +74,8 @@ function solver(data) {
     nextLayout = getNexLayout(prevLayout);
     frames.push(nextLayout);
   } while (!areLayoutsEqual(prevLayout, nextLayout));
+
+  snapshot(frames[frames.length - 1]);
 
   return convertToString(frames[frames.length - 1]).split("#").length-1;
 }
