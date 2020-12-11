@@ -1,4 +1,5 @@
 const AocSuite = require('../util/AocSuite');
+const Grid = require('../util/Grid');
 
 
 function solver(data) {
@@ -15,72 +16,39 @@ function solver(data) {
     return convertToString(a) === convertToString(b);
   }
 
+  const lookingDirections = [
+    [0, -1],
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    [1, 0],
+    [1, -1],
+  ];
 
-  function visionCreator(layout, initialPosition) {
-    function look(direction, position = initialPosition) {
-      let rowMod = 0;
-      let unitMod = 0;
-      let directionX = direction[0];
-      let directionY = direction[1];
-      if (directionX === 'left') {
-        unitMod = -1;
-      }
-      if (directionX === 'right') {
-        unitMod = 1;
-      }
-      if (directionY === 'up') {
-        rowMod = -1;
-      }
-      if (directionY === 'down') {
-        rowMod = 1;
-      }
-
-      const nextPosition = {
-        row: position.row + rowMod,
-        unit: position.unit + unitMod,
-      }
-      let nextRow = layout[nextPosition.row] || [];
-      let lookingAt = nextRow[nextPosition.unit];
-      if (lookingAt === '.') {
-        return look(direction, nextPosition);
-      } else {
-        return lookingAt || '';
-      }
-    }
-
-    return {
-      look,
-    }
-  }
-
-  function getVisibleUnits(layout, row, unit) {
-    const vision = visionCreator(layout, {
-      row,
-      unit,
-    });
-
-    return vision.look(['', 'up']) +
-      vision.look(['left', 'up']) +
-      vision.look(['left', '']) +
-      vision.look(['left', 'down']) +
-      vision.look(['', 'down']) +
-      vision.look(['right', 'down']) +
-      vision.look(['right', '']) +
-      vision.look(['right', 'up']);
-
+  function getVisibleUnits(grid, position, lookingDirections) {
+    return lookingDirections.reduce((acc, direction) => {
+      return acc + grid.look(direction, position);
+    }, '');
   }
 
   function getNexLayout(layout) {
     let newLayout = [];
+    const grid = new Grid({
+      grid: layout,
+      lineOfSightBlockers: ['#', 'L'],
+    });
+
     layout.forEach((row, rowIdx) => {
       if (!newLayout[rowIdx]) newLayout[rowIdx] = [];
 
       row.forEach((unit, unitIdx) => {
         let modifiedUnit = unit;
 
-        const visibleUnits = getVisibleUnits(layout, rowIdx, unitIdx);
+        const visibleUnits = getVisibleUnits(grid, [unitIdx, rowIdx], lookingDirections);
         if (unit === 'L') {
-          // check for adjacent occupied seats
+          // check for visible occupied seats
           if (!visibleUnits.includes('#')) {
             modifiedUnit = '#';
           }
