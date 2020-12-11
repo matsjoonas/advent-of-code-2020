@@ -3,13 +3,13 @@ const { createCanvas } = require('canvas');
 function snapshot(layout, config = {}) {
   const fileName = config.fileName || './image';
   const color = {
-    bg: '#c6dabf',
-    emptySeat: '#1a936f',
-    takenSeat: '#114b5f',
+    bg: '#333333',
+    emptySeat: '#939ba6',
+    takenSeat: '#1272c5',
   }
   const canvasPadding = 10;
-  const unitSize = 8;
-  const unitMargin = 3;
+  const unitSize = 9;
+  const unitMargin = 2;
   const totalSize = unitSize + (2 * unitMargin);
   const canvasWidth = layout[0].length * totalSize + (2 * canvasPadding);
   const canvasHeight = layout.length * totalSize + (2 * canvasPadding);

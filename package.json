@@ -5,7 +5,8 @@
   "dependencies": {
     "canvas": "^2.6.1",
     "colors": "^1.4.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "videoshow": "^0.1.12"
   },
   "devDependencies": {},
   "repository": {

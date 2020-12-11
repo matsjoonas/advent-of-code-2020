@@ -1,6 +1,7 @@
 const AocSuite = require('../util/AocSuite');
 const Grid = require('../util/Grid');
 const snapshot = require('./snapshot');
+const videoshow = require('videoshow');
 
 
 function solver(data) {
@@ -65,17 +66,45 @@ function solver(data) {
     return newLayout;
   }
 
-
+  const images = [];
   const frames = [];
   let prevLayout;
   let nextLayout;
+  let counter = 0;
   do {
     prevLayout = frames[frames.length - 1] || layout;
+    const imageName = './snapshots/snapshot_' + counter;
+   let slideDuration = 0.1;
+   // last slide
+    if (counter === 88) {
+      slideDuration = 3;
+    }
+    images.push({
+      path: imageName + '.png',
+      loop: slideDuration,
+    });
+    snapshot(prevLayout, {fileName: imageName});
     nextLayout = getNexLayout(prevLayout);
     frames.push(nextLayout);
+    counter++;
   } while (!areLayoutsEqual(prevLayout, nextLayout));
 
-  snapshot(frames[frames.length - 1]);
+
+  videoshow(images, {
+    transition: false,
+    loop: 0.1,
+    size: '1024x?',
+  })
+    .save('video.mp4')
+    .on('start', function (command) {
+      console.log('ffmpeg process started:', command)
+    })
+    .on('error', function (err) {
+      console.error('Error:', err)
+    })
+    .on('end', function (output) {
+      console.log('Video created in:', output)
+    })
 
   return convertToString(frames[frames.length - 1]).split("#").length-1;
 }
