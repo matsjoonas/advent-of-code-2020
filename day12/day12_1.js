@@ -1,5 +1,6 @@
 const AocSuite = require('../util/AocSuite');
 
+
 class Vehicle {
   constructor(config) {
     this.position = {
