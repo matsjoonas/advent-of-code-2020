@@ -15,7 +15,6 @@ class Computer {
   applyMask(value) {
     const mask = this.mask.split('');
     const bin = this.dec2bin(value).split('');
-    let floatingMultiplier = 1;
     let maskedAddresses = [];
     const masked = bin.map((char, idx) => {
       if (mask[idx] === '1') {
@@ -93,6 +92,8 @@ function solver(data) {
       }, [])
     );
 
+
+
   const computer = new Computer();
   const result = computer.run(input).memory;
 
@@ -102,6 +103,8 @@ function solver(data) {
   }
 
   return sum;
+
+
 }
 
 const suite = new AocSuite({
