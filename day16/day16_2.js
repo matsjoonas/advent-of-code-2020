@@ -18,6 +18,8 @@ function solver(data) {
     }
   }
 
+  const myTicket = input[1].split(',').map(value => parseInt(value, 10));
+
   const nearbyTickets = input[2]
     .split('\r\n')
     .map(ticket => ticket.split(',').map(value => parseInt(value, 10)));
@@ -61,11 +63,6 @@ function solver(data) {
     });
   });
 
-
-
-  //console.log(valuesByField);
-  //console.log(validationRules);
-
   function matchWithField(values, field) {
     const validValues = values.filter(value => {
       let isValid = false;
@@ -94,9 +91,34 @@ function solver(data) {
     })
   });
 
-  console.log(fieldMap);
+  let possibleFields = [];
+  for (const key of Object.keys(fieldMap)) {
+    possibleFields.push({
+      name: key,
+      fields: fieldMap[key],
+    });
+  }
+  possibleFields = possibleFields.sort((a, b) => a.fields.length - b.fields.length);
+  const assignedFieldNames = {};
+  const assignedFields = [];
+  possibleFields.forEach(item => {
+    // remove all already assigned fields
+    const fields = _.difference(item.fields, assignedFields);
 
-  return errorRate;
+    if (fields.length === 1) {
+      assignedFields.push(fields[0]);
+      assignedFieldNames[item.name] = fields[0];
+    }
+  });
+
+  let answer = 1;
+  for (const key of Object.keys(assignedFieldNames)) {
+    if (key.indexOf('departure') !== -1) {
+      answer = myTicket[parseInt(assignedFieldNames[key], 10)] * answer;
+    }
+  }
+
+  return answer;
 }
 
 const suite = new AocSuite({
