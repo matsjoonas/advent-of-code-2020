@@ -1,18 +1,18 @@
 const AocSuite = require('../util/AocSuite');
 
+function pointToString(point) {
+  return point.join('_');
+}
+
+function stringToPoint(str) {
+  return str.split('_').map(value => parseInt(value, 10));
+}
+
 function solver(data) {
   const input = data.toString().trim().split('\r\n')
     .map(point => point.split(''));
 
   const gridPoints = new Map();
-
-  function pointToString(point) {
-    return point[0] + '_' + point[1] + '_' + point[2] + '_' + point[3];
-  }
-
-  function stringToPoint(str) {
-    return str.split('_').map(value => parseInt(value, 10));
-  }
 
   input.forEach((row, y) => {
     row.forEach((col, x) => {
