@@ -60,25 +60,6 @@ function getSameLevelComponents(chars) {
     }
 
   }
-
-  /*
-  let carryOverOperator = null;
-  return components.map(component => {
-    let newComponent;
-    if (carryOverOperator) {
-      newComponent = [carryOverOperator, ...component];
-      carryOverOperator = null;
-    } else {
-      newComponent = component;
-    }
-
-    let lastChar = newComponent[newComponent.length - 1];
-    if (isOperator(lastChar)) {
-      carryOverOperator = newComponent.pop();
-    }
-    return newComponent
-  });
-  */
   return components;
 }
 
@@ -136,7 +117,7 @@ function solver(data) {
       }).result;
     }
   }
-  
+
 
   return input.reduce((acc, line) => {
     acc = acc + calculate(line.split(' ').join('').split(''));
