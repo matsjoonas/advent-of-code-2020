@@ -1,7 +1,7 @@
 const AocSuite = require('../util/AocSuite');
 
 function solver(data) {
-  const input = data.toString().trim();
+  const input = data.toString().trim().split('\r\n');
   console.log(input);
   return null;
 }
