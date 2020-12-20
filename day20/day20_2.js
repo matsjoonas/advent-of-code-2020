@@ -1,24 +1,25 @@
 const AocSuite = require('../util/AocSuite');
 const buildImage = require('./buildImage');
-
-
-// we don't need to actually generate all the rotation variations at this point
-// because we can just compare any borders
-// and if any one of the borders matches, we'll know that rotating
-// either of the tiles would align the borders eventually
-
+const countMonsters = require('./countMonsters');
+const createVariations = require('./createVariations');
 
 function solver(data) {
-  const image = buildImage(data);
+  let image = buildImage(data);
 
-  console.log(image);
+  const variations = createVariations(image);
+  let monsterCount = 0;
+  for (image of variations) {
+    monsterCount = countMonsters(image);
+    if (monsterCount) {
 
-  let pattern = '#    ##    ##    ###';
-  function matchPattern(pattern) {
-
+      break;
+    }
   }
 
-  return null;
+  const poundsInMonsterPattern = 15;
+  const poundsInImage = image.join('').split('').filter(char => char === '#').length;
+
+  return poundsInImage - (monsterCount * poundsInMonsterPattern);
 }
 
 const suite = new AocSuite({
@@ -27,6 +28,6 @@ const suite = new AocSuite({
   expectedTestAnswers: [null],
 });
 
-suite.test();
-//suite.solve();
+//suite.test();
+suite.solve();
 //suite.performance();
