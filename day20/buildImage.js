@@ -182,7 +182,32 @@ function buildImage(data) {
     return newRow;
   }
 
-  return image;
+  const croppedImage = image.map(row => {
+    return row.map(tile => {
+      let croppedImage = tile.tileImage.slice(1, tile.tileImage.length - 1);
+      croppedImage = croppedImage.map(line => line.slice(1, line.length - 1));
+      return croppedImage;
+    });
+  });
+
+  let mergedImage = [];
+
+  let rowMod = 0;
+  croppedImage.forEach(row => {
+    row.forEach(tileImage => {
+      tileImage.forEach((line, lineIndex) => {
+        let rowIndex = rowMod * tileImage.length + lineIndex;
+        if (!mergedImage[rowIndex]) {
+          mergedImage[rowIndex] = '';
+        }
+        mergedImage[rowIndex] = mergedImage[rowIndex] + line;
+      });
+
+    });
+    rowMod++;
+  });
+
+  return mergedImage;
 }
 
 module.exports = buildImage;
