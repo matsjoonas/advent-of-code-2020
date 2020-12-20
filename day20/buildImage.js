@@ -29,9 +29,17 @@ function parseTile(tile) {
   variations.push(fullImage);
   let flippedImages = [flip(fullImage, 'x'), flip(fullImage, 'y')];
   flippedImages.forEach(image => {
+    variations.push(image);
     for (let i = 1; i < 4; i++) {
       variations.push(rotate90(image, i));
     }
+  });
+
+  let rotatedImages = [rotate90(fullImage, 1), rotate90(fullImage, 2), rotate90(fullImage, 3)];
+  rotatedImages.forEach(image => {
+    variations.push(image);
+    variations.push(flip(image, 'x'));
+    variations.push(flip(image, 'y'));
   });
 
   return {
@@ -102,19 +110,13 @@ function buildImage(data) {
     }
   });
 
-  let cornerTiles = [];
-  cornerTileCandidates.forEach(candidate => {
-    if (!cornerTiles.find(tile => candidate.tile.id === tile.tile.id)) {
-      cornerTiles.push(candidate);
-    }
-  });
-
-  let topLeftCornerTile = cornerTileCandidates.find(candidate => {
+  let topLeftCornerTileCandidates = cornerTileCandidates.filter(candidate => {
     return candidate.borders.indexOf(1) !== -1 && candidate.borders.indexOf(2) !== -1;
-  }).tile;
+  });
+  
+  const topLeftCornerTile = topLeftCornerTileCandidates[0].tile;
 
-
-  function buildFirstCol(cornerTiles, tiles) {
+  function buildFirstCol(tiles) {
     let image = [];
     let i = 1;
     let keepBuildingFirstCol = true;
@@ -141,12 +143,11 @@ function buildImage(data) {
       }
       i++;
     }
-
     return image;
   }
 
   let usedTiles = [];
-  const image = buildFirstCol(cornerTiles, tiles)
+  const image = buildFirstCol(tiles)
     .map(row => {
       return buildRow(row, usedTiles, tiles)
     });

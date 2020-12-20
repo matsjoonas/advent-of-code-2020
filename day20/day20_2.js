@@ -13,6 +13,10 @@ function solver(data) {
 
   console.log(image);
 
+  let pattern = '#    ##    ##    ###';
+  function matchPattern(pattern) {
+
+  }
 
   return null;
 }
