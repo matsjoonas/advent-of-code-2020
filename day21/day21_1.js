@@ -8,8 +8,7 @@ function solver(data) {
   const allAllergens = new Set(
     _.flatten(input.map(food => food.allergens))
   );
-  // take first fish list
-  // find other lists with only fish
+
   let allAllergenicIngredients = [];
   allAllergens.forEach((allergen) => {
     const foods = input.filter(food => food.allergens.includes(allergen));
