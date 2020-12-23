@@ -45,15 +45,12 @@ function solver(data) {
   let currentCup = cups[0];
   for (let i = 0; i < nrOfTurns; i++) {
     const movingValues = getMovingValues(currentCup);
-
-    let destinationValue = getDestinationValue(cups, movingValues, currentCup.value);
-    const cachedCurrentCupNext = currentCup.next;
+    let destination = cupsList.get(getDestinationValue(cups, movingValues, currentCup.value));
+    const oldCurrentCupNext = currentCup.next;
     currentCup.next = currentCup.next.next.next.next;
 
-    let destination = cupsList.get(destinationValue);
-
-    cachedCurrentCupNext.next.next.next = destination.next;
-    destination.next = cachedCurrentCupNext;
+    oldCurrentCupNext.next.next.next = destination.next;
+    destination.next = oldCurrentCupNext;
 
     currentCup = currentCup.next;
   }
