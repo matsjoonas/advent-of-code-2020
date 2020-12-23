@@ -45,7 +45,7 @@ function maybeRealignCups(cups, currentCup, currentCupOriginalIndex) {
 
 function solver(data) {
   let cups = parseInput(data);
-
+  
   let nrOfTurns = 100;
   let currentCupIdx = 0;
   for (let i = 0; i < nrOfTurns; i++) {
@@ -70,6 +70,6 @@ const suite = new AocSuite({
   expectedTestAnswers: ['67384529'],
 });
 
-//suite.test();
-suite.solve();
+suite.test();
+//suite.solve();
 //suite.performance();
