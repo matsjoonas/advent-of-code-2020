@@ -2,79 +2,39 @@ const _ = require('lodash');
 const AocSuite = require('../util/AocSuite');
 const parseInput = require('./parseInput');
 
-function removeNegatingDirections(a = [], b = []) {
-  const longer = a.length > b.length ? a : b;
-  const diff = Math.abs(a.length - b.length);
-  return longer.slice(0, diff);
+const directionsMap = {
+  e: [1, -1, 0],
+  w: [-1, 1, 0],
+  ne: [1, 0, -1],
+  nw: [0, 1, -1],
+  se: [0, -1, 1],
+  sw: [-1, 0, 1],
 }
 
-function getDirectionGroups(directions) {
-  const processedDirections = [];
-  const directionGroups = {};
-
-  directions.forEach(thisDirection => {
-    if (processedDirections.includes(thisDirection)) {
-      return;
-    }
-    processedDirections.push(thisDirection);
-    directionGroups[thisDirection] = directions.filter(direction => direction === thisDirection);
-  });
-  return directionGroups;
+function step(a, b) {
+  return a.map((coord, index) => coord + b[index]);
 }
 
-function simplyfyWith(a = [], b = [], value) {
-  const longer = a.length > b.length ? a : b;
-  const diff = Math.abs(a.length - b.length);
-  return longer.map((item, index) => {
-    if (index < diff) {
-      return item;
-    } else {
-      return value;
-    }
-  });
+function pointToString(point) {
+  return point[0] + '_' + point[1] + '_' + point[2];
 }
 
-function minPath(item) {
-  let directionGroups = getDirectionGroups(item);
-
-  const modPath = [
-    ...(directionGroups.e || []),
-    ...(directionGroups.w || []),
-    ...simplyfyWith(directionGroups.se, directionGroups.ne, 'e'),
-    ...simplyfyWith(directionGroups.nw, directionGroups.sw, 'w'),
-  ];
-
-  directionGroups = getDirectionGroups(modPath);
-
-
-  const newPath = [
-    ...removeNegatingDirections(directionGroups.w, directionGroups.e),
-    ...removeNegatingDirections(directionGroups.se, directionGroups.nw),
-    ...removeNegatingDirections(directionGroups.ne, directionGroups.sw),
-  ];
-
-  return newPath;
+function stringToPoint(str) {
+  return str.split('_').map(value => parseInt(value, 10));
 }
 
 function solver(data) {
-  let input = parseInput(data);
+  let input = parseInput(data)
+    .map(line => line.map(d => directionsMap[d]));
 
-  const minPaths = input.map(minPath).map(line => {
-    return line.sort().join('');
-  });
+  const tileValues = {};
+  input.map(line => line.reduce(step, [0, 0, 0]))
+    .forEach(tileCoords => {
+      let key = pointToString(tileCoords);
+      tileValues[key] = !tileValues[key];
+    });
 
-  const visitCount = {};
-  minPaths.forEach(path => {
-    if (!visitCount[path]) {
-      visitCount[path] = 1;
-    } else {
-      visitCount[path] = visitCount[path] + 1;
-    }
-  });
-
-  console.log(visitCount);
-  
-  return null;
+  return Object.values(tileValues).reduce((acc, cur) => cur ? acc + 1 : acc, 0);
 }
 
 const suite = new AocSuite({
@@ -83,6 +43,6 @@ const suite = new AocSuite({
   expectedTestAnswers: [10],
 });
 
-suite.test();
-//suite.solve();
+//suite.test();
+suite.solve();
 //suite.performance();
